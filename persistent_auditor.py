@@ -16,6 +16,13 @@ def load_inventory():
         print("No inventory file found. Starting with empty inventory.")
 
     return total, history
+
+def save_inventory(total, history):
+    with open(INVENTORY_FILE, "w") as f:
+        f.write(str(total) + "\n")
+        f.write(",".join(str(h) for h in history) + "\n")
+    print(f"Inventory successfully saved to {INVENTORY_FILE}")
+
 def get_valid_input():
     stock = input("Enter stock quantity (or 'quit' to exit): ")
 
@@ -72,3 +79,4 @@ while True:
         break
 
 generate_report(deliveries_processed, failed_entries, history)
+save_inventory(inventory, history)
