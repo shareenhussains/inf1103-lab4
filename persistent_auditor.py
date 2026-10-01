@@ -1,4 +1,8 @@
-INVENTORY_FILE = "inventory.txt"
+import os
+
+INVENTORY_FILE = os.environ.get("INVENTORY_FILE", "inventory.txt") 
+#This means that if an INVENTORY_FILE environment variable is set (which Docker will do), the script uses it. If not, it falls back to inventory.txt, so it still works normally on your computer.
+
 
 def load_inventory():
     total = 0
