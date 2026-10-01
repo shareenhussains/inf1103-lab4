@@ -1,3 +1,21 @@
+INVENTORY_FILE = "inventory.txt"
+
+def load_inventory():
+    total = 0
+    history = []
+
+    try:
+        with open(INVENTORY_FILE, "r") as f:
+            lines = f.read().splitlines()
+        if len(lines) >= 1 and lines[0].strip().isdigit():
+            total = int(lines[0].strip())
+        if len(lines) >= 2 and lines[1].strip():
+            history = [int(x) for x in lines[1].split(",") if x.strip().isdigit()]
+        print(f"Loaded inventory: {total} units, {len(history)} past transactions.")
+    except FileNotFoundError:
+        print("No inventory file found. Starting with empty inventory.")
+
+    return total, history
 def get_valid_input():
     stock = input("Enter stock quantity (or 'quit' to exit): ")
 
@@ -23,7 +41,7 @@ def generate_report(total_units, failed_attempts):
     print("Number of Failed/Rejected Entries:", failed_attempts)
 
 
-inventory = 0
+inventory, history = load_inventory()
 failed_entries = 0
 deliveries_processed = 0
 
